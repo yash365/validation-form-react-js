@@ -1,0 +1,7 @@
+{
+    "world": [
+      { "id": "1", "country": "India" },
+      { "id": "2", "country": "USA" },
+      { "id": "3", "country": "New Zealand" }
+    ]
+  }
