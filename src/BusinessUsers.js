@@ -6,10 +6,12 @@ const initialState = {
     mobileNumber: "",
     pincode: "",
     email: "",
+    pancard: "",
     nameError: "",
     mobileNumberError: "",
     pincodeError: "",
     emailError: "",
+    pancardError: "",
     region: '',
     State: '',
 };
@@ -41,12 +43,14 @@ export default class BusinessUsers extends React.Component {
         let mobileNumberError = "";
         let pincodeError = "";
         let emailError = "";
+        let pancardError = "";
 
         let regexAlphabets = /^[A-Za-z]+$/;
         let regexIndianNumbers = /^[6-9]\d{9}$/;
         let regexNumbers = /^[0-9]*$/;
         let regexPincodes = /^[1-9][0-9]{5}$/;
         let regexEmail = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+        let regexPancard = /^[a-zA-Z]{3}[PCHFATBLJG]{1}[a-zA-Z]{1}[0-9]{4}[a-zA-Z]{1}$/;
 
         console.log(this.state.name);
         console.log(this.state.mobileNumber);
@@ -101,8 +105,17 @@ export default class BusinessUsers extends React.Component {
             emailError = "Invalid email"
         }
 
-        if (nameError || mobileNumberError || pincodeError || emailError) {
-            this.setState({ nameError, mobileNumberError, pincodeError, emailError });
+        // pancard validation
+        if (!this.state.pancard) {
+            pancardError = "Pan number cannot be blank";
+        }
+        else if (!regexPancard.test(this.state.pancard)) {
+            pancardError = "Invalid pan number"
+        }
+
+
+        if (pancardError|| nameError || mobileNumberError || pincodeError || emailError) {
+            this.setState({ pancardError, nameError, mobileNumberError, pincodeError, emailError });
             return false;
         }
 
@@ -203,6 +216,24 @@ export default class BusinessUsers extends React.Component {
                     />
                     <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.emailError}
+                    </div>
+                </div>
+
+                 {/* pan card field */}
+                 <div>
+                    <input
+                        style={{ fontSize: 14, color: "black" }}
+                        type="text"
+                        inputMode="text"
+                        maxLength="10"
+                        //minLength="3"
+                        name="pancard"
+                        placeholder="Pancard No."
+                        value={this.state.pancard}
+                        onChange={this.handleChange}
+                    />
+                    <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.pancardError}
                     </div>
                 </div>
 
